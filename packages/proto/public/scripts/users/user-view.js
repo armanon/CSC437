@@ -1,4 +1,7 @@
+// proto/public/scripts/users/user-view.js
 import { prepareTemplate } from '../template.js';
+import { loadJSON } from '../load-json.js';
+import { Auth, Observer } from "@calpoly/mustang";
 
 export class UserViewElement extends HTMLElement {
   static styles = `
@@ -62,6 +65,8 @@ export class UserViewElement extends HTMLElement {
     </template>
   `);
 
+  _authObserver = new Observer(this, "blazing:auth");
+
   constructor() {
     super();
     this.attachShadow({ mode: 'open' }).appendChild(
@@ -74,18 +79,32 @@ export class UserViewElement extends HTMLElement {
     return this.getAttribute('src');
   }
 
+  get authorization() {
+    console.log("Authorization for user, ", this._user);
+    return (
+      this._user?.authenticated && {
+        Authorization: `Bearer ${this._user.token}`
+      }
+    );
+  }
+
   connectedCallback() {
     this.shadowRoot.querySelector('#edit-button').addEventListener('click', () => this.toggleEditMode(true));
     this.shadowRoot.querySelector('#cancel-button').addEventListener('click', () => this.toggleEditMode(false));
 
-    if (this.src) {
-      this.loadJSON(this.src);
-    }
+    this._authObserver.observe(({ user }) => {
+      this._user = user;
+
+      if (this.src) {
+        loadJSON(this.src, this, this.renderSlots.bind(this), this.authorization);
+        this.shadowRoot.querySelector('restful-form').setAttribute('src', this.src);
+      }
+    });
   }
 
   async loadJSON(src) {
     try {
-      const response = await fetch(src);
+      const response = await fetch(src, { headers: this.authorization });
       if (!response.ok) {
         throw new Error(`Failed to fetch ${src}: ${response.statusText}`);
       }

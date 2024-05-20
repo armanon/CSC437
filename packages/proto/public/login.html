@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="styles/page.css">
+  <title>Login</title>
+  <script type="importmap">
+    {
+      "imports": {
+        "@calpoly/mustang": "/node_modules/@calpoly/mustang/dist/mustang.mjs"
+      }
+    }
+  </script>
+  <script type="module">
+    import { define, Auth } from "@calpoly/mustang";
+    define({ "mu-auth": Auth.Provider });
+  </script>
+  <script type="module" src="scripts/login-form.js"></script>
+</head>
+<body>
+  <mu-auth>
+    <header>
+      <h1>Login</h1>
+    </header>
+    <main>
+      <login-form>
+        <label>
+          <span>Username:</span>
+          <input name="username" type="text" required />
+        </label>
+        <label>
+          <span>Password:</span>
+          <input name="password" type="password" required />
+        </label>
+      </login-form>
+    </main>
+    <p>
+      Or did you want to
+      <a href="./newuser.html">Sign up as a new user</a>
+      ?
+    </p>
+  </mu-auth>
+</body>
+</html>
