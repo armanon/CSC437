@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles/reset.css">
+  <link rel="stylesheet" href="../styles/tokens.css">
+  <link rel="stylesheet" href="../styles/page.css">
+  <script src="../scripts/tracks/track-view.js" type="module" defer></script>
+  <title>Track Title</title>
+</head>
+<body>
+  <header>
+    <h1 class="merriweather-bold">Track Title</h1>
+  </header>
+  <main>
+    <!-- Track view component to fetch and display track data -->
+    <track-view src="/api/tracks/track-id"></track-view>
+  </main>
+  <footer>
+    <p>© 2024 Music Library. All rights reserved.</p>
+  </footer>
+</body>
+</html>

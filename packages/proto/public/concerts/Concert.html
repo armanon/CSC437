@@ -5,17 +5,22 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles/tokens.css">
-<link rel="stylesheet" href="styles/page.css">
-<link rel="stylesheet" href="styles/reset.css">
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles/tokens.css">
+  <link rel="stylesheet" href="../styles/page.css">
+  <link rel="stylesheet" href="../styles/reset.css">
+  <script src="../scripts/json-loader.js" type="module" defer></script>
   <title>Concert Title</title>
 </head>
 <body>
+  <json-object src="/api/concerts/concert-id">
+    <a href="#" onclick="relayEvent(event, 'json-object:open')">Load Concert Data</a>
+  </json-object>
+
   <article class="concert">
     <header>
       <h1 class="merriweather-bold">Concert Title</h1>
-      <img src="images/concert-poster.jpg" alt="Concert Title">
+      <img src="../images/concert-poster.jpg" alt="Concert Title">
     </header>
     <section class="details">
       <h2 class="merriweather-regular">Event Details</h2>
@@ -25,7 +30,7 @@
         <dt>Location</dt>
         <dd>Venue name and address</dd>
         <dt>Artists Performing</dt>
-        <dd><a href="artist.html">Artist Name</a></dd>
+        <dd><a href="../artists/index.html">Artist Name</a></dd>
       </dl>
     </section>
   </article>

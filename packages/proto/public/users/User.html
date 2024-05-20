@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles/reset.css">
+  <link rel="stylesheet" href="../styles/tokens.css">
+  <link rel="stylesheet" href="../styles/page.css">
+  <title>User Profile</title>
+</head>
+<body>
+  <article class="user">
+    <header>
+      <h1 class="merriweather-bold">User Profile</h1>
+    </header>
+    <section>
+      <dl>
+        <dt>Username</dt>
+        <dd id="username">Loading...</dd>
+        <dt>Email</dt>
+        <dd id="email">Loading...</dd>
+        <dt>First Name</dt>
+        <dd id="firstName">Loading...</dd>
+        <dt>Last Name</dt>
+        <dd id="lastName">Loading...</dd>
+      </dl>
+    </section>
+  </article>
+  <script>
+    async function loadUserData() {
+      const response = await fetch('/api/users/user-id');
+      if (response.ok) {
+        const user = await response.json();
+        document.getElementById('username').textContent = user.username;
+        document.getElementById('email').textContent = user.email;
+        document.getElementById('firstName').textContent = user.firstName;
+        document.getElementById('lastName').textContent = user.lastName;
+      } else {
+        console.error('Failed to load user data');
+      }
+    }
+    loadUserData();
+  </script>
+</body>
+</html>
