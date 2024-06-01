@@ -10,6 +10,8 @@ import userRouter from './routes/users';
 import auth, { authenticateUser } from "./routes/auth"; // Import auth and authenticateUser
 
 import { connect } from "./services/mongo";
+import fs from "node:fs/promises";
+import path from "path";
 
 // Connect to MongoDB
 connect("musik");
@@ -25,7 +27,6 @@ app.use(express.json());
 app.use(express.static(staticDir));
 
 // Serve node_modules for Mustang
-const path = require('path');
 const nodeModules = path.resolve(__dirname, "../../../node_modules");
 console.log("Serving NPM packages from", nodeModules);
 app.use("/node_modules", express.static(nodeModules));
@@ -39,6 +40,14 @@ app.use('/api/genres', authenticateUser, genreRouter);
 app.use('/api/playlists', authenticateUser, playlistRouter);
 app.use('/api/concerts', authenticateUser, concertRouter);
 app.use('/api/users', authenticateUser, userRouter);
+
+// Serve the SPA for any /app/... requests
+app.use("/app", (req: Request, res: Response) => {
+  const indexHtml = path.resolve(staticDir, "index.html");
+  fs.readFile(indexHtml, { encoding: "utf8" }).then((html) =>
+    res.send(html)
+  );
+});
 
 // Test endpoint
 app.get("/hello", (req: Request, res: Response) => {

@@ -1,0 +1,42 @@
+/* tokens.css */
+:root {
+    /* Default color scheme (light mode) */
+    --color-background-page: #FFFFFF; /* Light background for the page */
+    --color-background-header: #F0F0F0; /* Lighter background for the header */
+    --color-text: #333333; /* Darker text for better readability in light mode */
+    --color-accent: #0055cc; /* Blue accent color */
+    --color-links: #0066cc;
+    --color-links-hover: #004499;
+    --color-input-bg: #eeeeee;
+    --color-border: #cccccc;
+    --color-border-focus: #aaaaaa;
+
+    /* Font stack */
+    --font-primary: 'Open Sans', sans-serif;
+    --font-secondary: 'Merriweather', serif;
+
+    /* Font sizes */
+    --font-size-body: 1rem;
+    --font-size-mlarge: 1.25rem;
+    --font-size-large: 1.5rem;
+    --font-size-xlarge: 2rem;
+    --font-size-xxlarge: 2.5rem;
+
+    --size-spacing-small: 8px;
+    --size-spacing-medium: 16px;
+    --size-spacing-large: 32px;
+    --size-border-radius: 10px;
+}
+
+body.dark-mode {
+    /* Dark mode overrides */
+    --color-background-page: #282c34;
+    --color-background-header: #3a3f4b;
+    --color-text: #abb2bf;
+    --color-accent: #61afef;
+    --color-links: #98c379;
+    --color-links-hover: #c678dd;
+    --color-input-bg: #3a3f4b;
+    --color-border: #61afef;
+    --color-border-focus: #e5c07b;
+}
