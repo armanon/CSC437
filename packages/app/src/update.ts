@@ -12,7 +12,7 @@ export default function update(
     case "artist/save":
       saveArtist(message[1], user)
         .then((artist) =>
-          apply((model) => ({ ...model, artist }))
+          apply((model) => ({ ...model, artists:[artist] }))
         )
         .then(() => {
           const { onSuccess } = message[1];
@@ -23,6 +23,12 @@ export default function update(
           if (onFailure) onFailure(error);
         });
       break;
+      case "artist/select":
+        loadArtist(message[1], user)
+      .then((artist) =>
+                apply((model) => ({ ...model, artist:[artist] }))
+              )
+        break;
     case "album/select":
 	loadAlbum(message[1], user)
 .then((album) =>
@@ -132,6 +138,34 @@ function saveArtist(
       return undefined;
     });
 }
+
+function loadArtist(
+  msg: {
+      artistId: string;
+  }, user: Auth.User){
+  return fetch(`/api/artists/${msg.artistId}`, {
+     
+      headers: {
+        "Content-Type": "application/json",
+        ...Auth.headers(user)
+      },
+      
+    })
+      .then((response: Response) => {
+        debugger
+        if (response.status === 200) return response.json();
+        else
+          throw new Error(
+            `Failed to save album for ${msg.artistId}`
+          );
+      })
+      .then((json: unknown) => {
+        debugger
+        if (json) return json as Artist;
+        return undefined;
+      });
+  }
+
 
 function loadAlbum(
 msg: {

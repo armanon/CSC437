@@ -35,9 +35,13 @@ module.exports = __toCommonJS(artist_model_exports);
 var import_mongoose = __toESM(require("mongoose"));
 var import_artist = require("./artist");
 const artistSchema = new import_mongoose.default.Schema({
-  id: { type: String, required: true, trim: true },
+  id: {
+    type: String,
+    /*required: true,*/
+    trim: true
+  },
   name: { type: String, required: true, trim: true },
-  genres: [{ type: String, trim: true }],
+  genres: [{ type: String, required: true, trim: true }],
   bio: { type: String, trim: true }
 }, { collection: "artists" });
 const ArtistModel = import_mongoose.default.model("Artist", artistSchema);

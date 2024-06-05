@@ -33,7 +33,7 @@ app.use("/node_modules", express.static(nodeModules));
 
 // Routes
 app.use('/auth', auth); // Add auth routes
-app.use('/api/artists', authenticateUser, artistRouter);
+app.use('/api/artists', /*authenticateUser,*/ artistRouter);
 app.use('/api/albums', /*authenticateUser,*/ albumRouter); // corrected to plural 'albums'
 app.use('/api/tracks', authenticateUser, trackRouter);
 app.use('/api/genres', authenticateUser, genreRouter);

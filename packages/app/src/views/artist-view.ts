@@ -15,7 +15,7 @@ export class ArtistViewElement extends View<Model, Msg> {
 
   @property()
   get artists(): Artist[] {
-    return this.model.artists || [];
+    return this.model.artist || [];
   }
 
   constructor() {
@@ -29,32 +29,47 @@ export class ArtistViewElement extends View<Model, Msg> {
     });
   }
 
+  attributeChangedCallback(
+    name: string,
+    oldValue: string,
+    newValue: string
+  ) {
+    if (
+      name === "artist-id" &&
+      oldValue !== newValue &&
+      newValue
+    ) {
+      this.dispatchMessage([
+        "artist/select",
+        { artistId: newValue }
+      ]);
+    }
+    super.attributeChangedCallback(name, oldValue, newValue);
+  }
+
   render() {
-    const filteredArtists = this.genreFilter === "all" ? this.artists : this.artists.filter(artist => artist.genre === this.genreFilter);
+
     return html`
       <div>
-        <label for="genreFilter">Filter by genre:</label>
-        <select id="genreFilter" @change=${this.onGenreChange}>
-          <option value="all">All</option>
-          ${this.model.genres.map(
-            (genre: Genre) => html`
-              <option value="${genre.name}">${genre.name}</option>
-            `
-          )}
-        </select>
-        <ul>
-          ${filteredArtists.map(
-            artist => html`
-              <li>
-                ${artist.name}
-                <a href="/app/artist/${artist._id}/edit">Edit</a>
-              </li>
-            `
-          )}
-        </ul>
-      </div>
+                
+                ${this.artists.map(this.renderartist)}
+                </div>
+          
     `;
   }
+
+  renderartist(artist: Artist){
+    debugger
+    return html`
+      <div>
+                ${artist.name}
+                <a href="/app/artist/${artist._id}/edit">Edit</a>
+      </div>
+          
+    `;
+  }
+
+
 
   onGenreChange(event: Event) {
     const select = event.target as HTMLSelectElement;

@@ -43,7 +43,11 @@ const nodeModules = import_path.default.resolve(__dirname, "../../../node_module
 console.log("Serving NPM packages from", nodeModules);
 app.use("/node_modules", import_express.default.static(nodeModules));
 app.use("/auth", import_auth.default);
-app.use("/api/artists", import_auth.authenticateUser, import_artists.default);
+app.use(
+  "/api/artists",
+  /*authenticateUser,*/
+  import_artists.default
+);
 app.use(
   "/api/albums",
   /*authenticateUser,*/
