@@ -39,6 +39,7 @@ var __async = (__this, __arguments, generator) => {
 var genre_svc_exports = {};
 __export(genre_svc_exports, {
   addGenre: () => addGenre,
+  default: () => genre_svc_default,
   deleteGenre: () => deleteGenre,
   getAllGenres: () => getAllGenres,
   getGenreById: () => getGenreById,
@@ -62,6 +63,7 @@ const updateGenre = (id, updatedGenre) => __async(void 0, null, function* () {
 const deleteGenre = (id) => __async(void 0, null, function* () {
   return import_genre_model.GenreModel.findByIdAndRemove(id);
 });
+var genre_svc_default = { getAllGenres, getGenreById, addGenre, updateGenre, deleteGenre };
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
   addGenre,

@@ -66,4 +66,3 @@ export class ConcertViewElement extends View<Model, Msg> {
   }
 }
 
-define("concert-view", ConcertViewElement);

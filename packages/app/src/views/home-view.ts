@@ -20,4 +20,4 @@ export class HomeViewElement extends View<Model, Msg> {
   }
 }
 
-define("home-view", HomeViewElement);
+

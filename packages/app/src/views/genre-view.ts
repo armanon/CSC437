@@ -66,4 +66,4 @@ export class GenreViewElement extends View<Model, Msg> {
   }
 }
 
-define("genre-view", GenreViewElement);
+

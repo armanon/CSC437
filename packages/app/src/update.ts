@@ -23,6 +23,12 @@ export default function update(
           if (onFailure) onFailure(error);
         });
       break;
+    case "album/select":
+	loadAlbum(message[1], user)
+.then((album) =>
+          apply((model) => ({ ...model, album }))
+        )
+	break;
     case "album/save":
       saveAlbum(message[1], user)
         .then((album) =>
@@ -95,7 +101,7 @@ export default function update(
       break;
     default:
       const unhandled: never = message[0];
-      throw new Error(`Unhandled Auth message "${unhandled}"`);
+      throw new Error(`Unhandled message "${unhandled}"`);
   }
 }
 
@@ -123,6 +129,31 @@ function saveArtist(
     })
     .then((json: unknown) => {
       if (json) return json as Artist;
+      return undefined;
+    });
+}
+
+function loadAlbum(
+msg: {
+    albumId: string;
+}, user: Auth.User){
+return fetch(`/api/albums/${msg.albumId}`, {
+   
+    headers: {
+      "Content-Type": "application/json",
+      ...Auth.headers(user)
+    },
+    
+  })
+    .then((response: Response) => {
+      if (response.status === 200) return response.json();
+      else
+        throw new Error(
+          `Failed to save album for ${msg.albumId}`
+        );
+    })
+    .then((json: unknown) => {
+      if (json) return json as Album;
       return undefined;
     });
 }

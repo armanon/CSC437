@@ -57,6 +57,8 @@ const addAlbum = (album) => __async(void 0, null, function* () {
   return newAlbum.save();
 });
 const updateAlbum = (id, updatedAlbum) => __async(void 0, null, function* () {
+  const foundAlbum = yield import_album_model.AlbumModel.findById(id);
+  if (!foundAlbum) throw new Error(`${id} Not Found`);
   return import_album_model.AlbumModel.findByIdAndUpdate(id, updatedAlbum, { new: true });
 });
 const deleteAlbum = (id) => __async(void 0, null, function* () {

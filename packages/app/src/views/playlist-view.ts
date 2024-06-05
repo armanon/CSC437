@@ -66,4 +66,3 @@ export class PlaylistViewElement extends View<Model, Msg> {
   }
 }
 
-define("playlist-view", PlaylistViewElement);

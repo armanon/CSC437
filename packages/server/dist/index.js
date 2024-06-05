@@ -29,20 +29,37 @@ var import_genres = __toESM(require("./routes/genres"));
 var import_playlists = __toESM(require("./routes/playlists"));
 var import_concerts = __toESM(require("./routes/concerts"));
 var import_users = __toESM(require("./routes/users"));
+var import_auth = __toESM(require("./routes/auth"));
 var import_mongo = require("./services/mongo");
+var import_promises = __toESM(require("node:fs/promises"));
+var import_path = __toESM(require("path"));
 (0, import_mongo.connect)("musik");
 const app = (0, import_express.default)();
 const port = process.env.PORT || 3e3;
 const staticDir = process.env.STATIC || "public";
 app.use(import_express.default.json());
 app.use(import_express.default.static(staticDir));
-app.use("/api/artists", import_artists.default);
-app.use("/api/album", import_album.default);
-app.use("/api/tracks", import_tracks.default);
-app.use("/api/genres", import_genres.default);
-app.use("/api/playlists", import_playlists.default);
-app.use("/api/concerts", import_concerts.default);
-app.use("/api/users", import_users.default);
+const nodeModules = import_path.default.resolve(__dirname, "../../../node_modules");
+console.log("Serving NPM packages from", nodeModules);
+app.use("/node_modules", import_express.default.static(nodeModules));
+app.use("/auth", import_auth.default);
+app.use("/api/artists", import_auth.authenticateUser, import_artists.default);
+app.use(
+  "/api/albums",
+  /*authenticateUser,*/
+  import_album.default
+);
+app.use("/api/tracks", import_auth.authenticateUser, import_tracks.default);
+app.use("/api/genres", import_auth.authenticateUser, import_genres.default);
+app.use("/api/playlists", import_auth.authenticateUser, import_playlists.default);
+app.use("/api/concerts", import_auth.authenticateUser, import_concerts.default);
+app.use("/api/users", import_auth.authenticateUser, import_users.default);
+app.use("/app", (req, res) => {
+  const indexHtml = import_path.default.resolve(staticDir, "index.html");
+  import_promises.default.readFile(indexHtml, { encoding: "utf8" }).then(
+    (html) => res.send(html)
+  );
+});
 app.get("/hello", (req, res) => {
   res.send("Hello, World!");
 });

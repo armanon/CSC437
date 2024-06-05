@@ -11,6 +11,12 @@ export type Msg =
       }
     ]
   | [
+      "album/select",
+      {
+        albumId: string;
+      }
+    ]
+ |[
       "album/save",
       {
         albumId: string;
@@ -18,7 +24,8 @@ export type Msg =
         onSuccess?: () => void;
         onFailure?: (err: Error) => void;
       }
-    ]
+    ]|
+
   | [
       "genre/save",
       {

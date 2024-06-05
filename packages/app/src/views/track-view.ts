@@ -66,4 +66,4 @@ export class TrackViewElement extends View<Model, Msg> {
   }
 }
 
-define("track-view", TrackViewElement);
+

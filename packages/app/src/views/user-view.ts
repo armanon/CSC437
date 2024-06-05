@@ -60,4 +60,4 @@ export class UserViewElement extends View<Model, Msg> {
   }
 }
 
-define("user-view", UserViewElement);
+

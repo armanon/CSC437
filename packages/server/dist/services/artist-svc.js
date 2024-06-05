@@ -57,7 +57,11 @@ const addArtist = (artist) => __async(void 0, null, function* () {
   return newArtist.save();
 });
 const updateArtist = (id, updatedArtist) => __async(void 0, null, function* () {
-  return import_artist_model.ArtistModel.findByIdAndUpdate(id, updatedArtist, { new: true });
+  const found = yield import_artist_model.ArtistModel.findOne({ _id: id });
+  if (!found) throw `${id} Not Found`;
+  const updated = yield import_artist_model.ArtistModel.findByIdAndUpdate(id, updatedArtist, { new: true });
+  if (!updated) throw `${id} not updated`;
+  return updated;
 });
 const deleteArtist = (id) => __async(void 0, null, function* () {
   return import_artist_model.ArtistModel.findByIdAndRemove(id);

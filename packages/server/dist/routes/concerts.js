@@ -26,6 +26,26 @@ var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__ge
   mod
 ));
 var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
+var __async = (__this, __arguments, generator) => {
+  return new Promise((resolve, reject) => {
+    var fulfilled = (value) => {
+      try {
+        step(generator.next(value));
+      } catch (e) {
+        reject(e);
+      }
+    };
+    var rejected = (value) => {
+      try {
+        step(generator.throw(value));
+      } catch (e) {
+        reject(e);
+      }
+    };
+    var step = (x) => x.done ? resolve(x.value) : Promise.resolve(x.value).then(fulfilled, rejected);
+    step((generator = generator.apply(__this, __arguments)).next());
+  });
+};
 var concerts_exports = {};
 __export(concerts_exports, {
   default: () => concerts_default
@@ -34,31 +54,56 @@ module.exports = __toCommonJS(concerts_exports);
 var import_express = __toESM(require("express"));
 var import_concert_svc = require("../services/concert-svc");
 const router = import_express.default.Router();
-router.get("/", (req, res) => {
-  res.json((0, import_concert_svc.getAllConcerts)());
-});
-router.get("/:id", (req, res) => {
-  const concert = (0, import_concert_svc.getConcertById)(req.params.id);
-  if (concert) {
-    res.json(concert);
-  } else {
-    res.status(404).send("Concert not found");
+router.get("/", (req, res) => __async(void 0, null, function* () {
+  try {
+    const concerts = yield (0, import_concert_svc.getAllConcerts)();
+    res.json(concerts);
+  } catch (err) {
+    res.status(500).send(err.message);
   }
-});
-router.post("/", (req, res) => {
-  (0, import_concert_svc.addConcert)(req.body);
-  res.status(201).send("Concert added");
-});
-router.put("/:id", (req, res) => {
-  const updatedConcert = (0, import_concert_svc.updateConcert)(req.params.id, req.body);
-  if (updatedConcert) {
-    res.json(updatedConcert);
-  } else {
-    res.status(404).send("Concert not found");
+}));
+router.get("/:id", (req, res) => __async(void 0, null, function* () {
+  try {
+    const concert = yield (0, import_concert_svc.getConcertById)(req.params.id);
+    if (concert) {
+      res.json(concert);
+    } else {
+      res.status(404).send("Concert not found");
+    }
+  } catch (err) {
+    res.status(500).send(err.message);
   }
-});
-router.delete("/:id", (req, res) => {
-  (0, import_concert_svc.deleteConcert)(req.params.id);
-  res.status(204).send();
-});
+}));
+router.post("/", (req, res) => __async(void 0, null, function* () {
+  try {
+    const newConcert = yield (0, import_concert_svc.addConcert)(req.body);
+    res.status(201).json(newConcert);
+  } catch (err) {
+    res.status(500).send(err.message);
+  }
+}));
+router.put("/:id", (req, res) => __async(void 0, null, function* () {
+  try {
+    const updatedConcert = yield (0, import_concert_svc.updateConcert)(req.params.id, req.body);
+    if (updatedConcert) {
+      res.json(updatedConcert);
+    } else {
+      res.status(404).send("Concert not found");
+    }
+  } catch (err) {
+    res.status(500).send(err.message);
+  }
+}));
+router.delete("/:id", (req, res) => __async(void 0, null, function* () {
+  try {
+    const result = yield (0, import_concert_svc.deleteConcert)(req.params.id);
+    if (result) {
+      res.status(204).send();
+    } else {
+      res.status(404).send("Concert not found");
+    }
+  } catch (err) {
+    res.status(500).send(err.message);
+  }
+}));
 var concerts_default = router;

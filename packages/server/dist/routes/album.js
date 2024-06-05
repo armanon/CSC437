@@ -26,6 +26,26 @@ var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__ge
   mod
 ));
 var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
+var __async = (__this, __arguments, generator) => {
+  return new Promise((resolve, reject) => {
+    var fulfilled = (value) => {
+      try {
+        step(generator.next(value));
+      } catch (e) {
+        reject(e);
+      }
+    };
+    var rejected = (value) => {
+      try {
+        step(generator.throw(value));
+      } catch (e) {
+        reject(e);
+      }
+    };
+    var step = (x) => x.done ? resolve(x.value) : Promise.resolve(x.value).then(fulfilled, rejected);
+    step((generator = generator.apply(__this, __arguments)).next());
+  });
+};
 var album_exports = {};
 __export(album_exports, {
   default: () => album_default
@@ -34,31 +54,56 @@ module.exports = __toCommonJS(album_exports);
 var import_express = __toESM(require("express"));
 var import_album_svc = require("../services/album-svc");
 const router = import_express.default.Router();
-router.get("/", (req, res) => {
-  res.json((0, import_album_svc.getAllAlbums)());
-});
-router.get("/:id", (req, res) => {
-  const album = (0, import_album_svc.getAlbumById)(req.params.id);
-  if (album) {
-    res.json(album);
-  } else {
-    res.status(404).send("Album not found");
+router.get("/", (req, res) => __async(void 0, null, function* () {
+  try {
+    const albums = yield (0, import_album_svc.getAllAlbums)();
+    res.json(albums);
+  } catch (error) {
+    res.status(500).send(error.message);
   }
-});
-router.post("/", (req, res) => {
-  (0, import_album_svc.addAlbum)(req.body);
-  res.status(201).send("Album added");
-});
-router.put("/:id", (req, res) => {
-  const updatedAlbum = (0, import_album_svc.updateAlbum)(req.params.id, req.body);
-  if (updatedAlbum) {
-    res.json(updatedAlbum);
-  } else {
-    res.status(404).send("Album not found");
+}));
+router.get("/:id", (req, res) => __async(void 0, null, function* () {
+  try {
+    const album = yield (0, import_album_svc.getAlbumById)(req.params.id);
+    if (album) {
+      res.json(album);
+    } else {
+      res.status(404).send("Album not found");
+    }
+  } catch (error) {
+    res.status(500).send(error.message);
   }
-});
-router.delete("/:id", (req, res) => {
-  (0, import_album_svc.deleteAlbum)(req.params.id);
-  res.status(204).send();
-});
+}));
+router.post("/", (req, res) => __async(void 0, null, function* () {
+  try {
+    const newAlbum = yield (0, import_album_svc.addAlbum)(req.body);
+    res.status(201).json(newAlbum);
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+}));
+router.put("/:id", (req, res) => __async(void 0, null, function* () {
+  try {
+    const updatedAlbum = yield (0, import_album_svc.updateAlbum)(req.params.id, req.body);
+    if (updatedAlbum) {
+      res.json(updatedAlbum);
+    } else {
+      res.status(404).send("Album not found");
+    }
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+}));
+router.delete("/:id", (req, res) => __async(void 0, null, function* () {
+  try {
+    const deletedAlbum = yield (0, import_album_svc.deleteAlbum)(req.params.id);
+    if (deletedAlbum) {
+      res.status(204).send();
+    } else {
+      res.status(404).send("Album not found");
+    }
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+}));
 var album_default = router;

@@ -1,6 +1,6 @@
 import express, { Request, Response } from 'express';
 import artistRouter from './routes/artists';
-import albumRouter from './routes/albums'; // corrected to plural 'albums'
+import albumRouter from './routes/album'; // corrected to plural 'albums'
 import trackRouter from './routes/tracks';
 import genreRouter from './routes/genres';
 import playlistRouter from './routes/playlists';
@@ -34,7 +34,7 @@ app.use("/node_modules", express.static(nodeModules));
 // Routes
 app.use('/auth', auth); // Add auth routes
 app.use('/api/artists', authenticateUser, artistRouter);
-app.use('/api/albums', authenticateUser, albumRouter); // corrected to plural 'albums'
+app.use('/api/albums', /*authenticateUser,*/ albumRouter); // corrected to plural 'albums'
 app.use('/api/tracks', authenticateUser, trackRouter);
 app.use('/api/genres', authenticateUser, genreRouter);
 app.use('/api/playlists', authenticateUser, playlistRouter);

@@ -39,6 +39,7 @@ var __async = (__this, __arguments, generator) => {
 var track_svc_exports = {};
 __export(track_svc_exports, {
   addTrack: () => addTrack,
+  default: () => track_svc_default,
   deleteTrack: () => deleteTrack,
   getAllTracks: () => getAllTracks,
   getTrackById: () => getTrackById,
@@ -62,6 +63,7 @@ const updateTrack = (id, updatedTrack) => __async(void 0, null, function* () {
 const deleteTrack = (id) => __async(void 0, null, function* () {
   return import_track_model.TrackModel.findByIdAndRemove(id);
 });
+var track_svc_default = { getAllTracks, getTrackById, addTrack, updateTrack, deleteTrack };
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
   addTrack,

@@ -39,6 +39,7 @@ var __async = (__this, __arguments, generator) => {
 var concert_svc_exports = {};
 __export(concert_svc_exports, {
   addConcert: () => addConcert,
+  default: () => concert_svc_default,
   deleteConcert: () => deleteConcert,
   getAllConcerts: () => getAllConcerts,
   getConcertById: () => getConcertById,
@@ -62,6 +63,7 @@ const updateConcert = (id, updatedConcert) => __async(void 0, null, function* ()
 const deleteConcert = (id) => __async(void 0, null, function* () {
   return import_concert_model.ConcertModel.findByIdAndRemove(id);
 });
+var concert_svc_default = { getAllConcerts, getConcertById, addConcert, updateConcert, deleteConcert };
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
   addConcert,

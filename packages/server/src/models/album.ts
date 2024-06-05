@@ -1,6 +1,5 @@
 // src/models/album.ts
 export interface Album {
-  id: string;
   title: string;
   artistId: string;
   releaseDate: Date;

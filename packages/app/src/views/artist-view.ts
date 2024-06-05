@@ -66,4 +66,4 @@ export class ArtistViewElement extends View<Model, Msg> {
   }
 }
 
-define("artist-view", ArtistViewElement);
+

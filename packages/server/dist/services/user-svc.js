@@ -39,6 +39,7 @@ var __async = (__this, __arguments, generator) => {
 var user_svc_exports = {};
 __export(user_svc_exports, {
   addUser: () => addUser,
+  default: () => user_svc_default,
   deleteUser: () => deleteUser,
   getAllUsers: () => getAllUsers,
   getUserById: () => getUserById,
@@ -62,6 +63,7 @@ const updateUser = (id, updatedUser) => __async(void 0, null, function* () {
 const deleteUser = (id) => __async(void 0, null, function* () {
   return import_user_model.UserModel.findByIdAndRemove(id);
 });
+var user_svc_default = { getAllUsers, getUserById, addUser, updateUser, deleteUser };
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
   addUser,

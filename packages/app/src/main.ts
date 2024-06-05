@@ -8,6 +8,7 @@ import {
 import { Msg } from "./messages";
 import { Model, init } from "./model";
 import update from "./update";
+import {html} from "lit";
 
 import { ArtistViewElement } from "./views/artist-view";
 import { ArtistEditElement } from "./views/artist-edit";
@@ -112,13 +113,13 @@ define({
   "mu-history": History.Provider,
   "mu-switch": class AppSwitch extends Switch.Element {
     constructor() {
-      super(routes, "blazing:history");
+      super(routes, "musik:history", "musik:auth");
     }
   },
   "mu-auth": Auth.Provider,
   "mu-store": class AppStore extends Store.Provider<Model, Msg> {
     constructor() {
-      super(update, init, "blazing:auth");
+      super(update, init, "musik:auth");
     }
   },
   "artist-view": ArtistViewElement,

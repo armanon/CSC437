@@ -39,6 +39,7 @@ var __async = (__this, __arguments, generator) => {
 var playlist_svc_exports = {};
 __export(playlist_svc_exports, {
   addPlaylist: () => addPlaylist,
+  default: () => playlist_svc_default,
   deletePlaylist: () => deletePlaylist,
   getAllPlaylists: () => getAllPlaylists,
   getPlaylistById: () => getPlaylistById,
@@ -62,6 +63,7 @@ const updatePlaylist = (id, updatedPlaylist) => __async(void 0, null, function* 
 const deletePlaylist = (id) => __async(void 0, null, function* () {
   return import_playlist_model.PlaylistModel.findByIdAndRemove(id);
 });
+var playlist_svc_default = { getAllPlaylists, getPlaylistById, addPlaylist, updatePlaylist, deletePlaylist };
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
   addPlaylist,

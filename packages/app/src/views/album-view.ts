@@ -14,8 +14,8 @@ export class AlbumViewElement extends View<Model, Msg> {
   genreFilter: string = "all";
 
   @property()
-  get albums(): Album[] {
-    return this.model.albums || [];
+  get album(): Album[] {
+    return this.model.album || [];
   }
 
   constructor() {
@@ -29,29 +29,29 @@ export class AlbumViewElement extends View<Model, Msg> {
     });
   }
 
+  attributeChangedCallback(
+    name: string,
+    oldValue: string,
+    newValue: string
+  ) {
+    if (
+      name === "album-id" &&
+      oldValue !== newValue &&
+      newValue
+    ) {
+      this.dispatchMessage([
+        "album/select",
+        { albumId: newValue }
+      ]);
+    }
+    super.attributeChangedCallback(name, oldValue, newValue);
+  }
+
   render() {
-    const filteredAlbums = this.genreFilter === "all" ? this.albums : this.albums.filter(album => album.genre === this.genreFilter);
     return html`
       <div>
-        <label for="genreFilter">Filter by genre:</label>
-        <select id="genreFilter" @change=${this.onGenreChange}>
-          <option value="all">All</option>
-          ${this.model.genres.map(
-            (genre: Genre) => html`
-              <option value="${genre.name}">${genre.name}</option>
-            `
-          )}
-        </select>
-        <ul>
-          ${filteredAlbums.map(
-            album => html`
-              <li>
-                ${album.title}
-                <a href="/app/album/${album._id}/edit">Edit</a>
-              </li>
-            `
-          )}
-        </ul>
+                        ${this.album.title}
+                <a href="/app/album/${this.album._id}/edit">Edit</a>
       </div>
     `;
   }
@@ -66,4 +66,4 @@ export class AlbumViewElement extends View<Model, Msg> {
   }
 }
 
-define("album-view", AlbumViewElement);
+

@@ -33,7 +33,6 @@ __export(album_model_exports, {
 module.exports = __toCommonJS(album_model_exports);
 var import_mongoose = __toESM(require("mongoose"));
 const albumSchema = new import_mongoose.default.Schema({
-  id: { type: String, required: true, trim: true },
   title: { type: String, required: true, trim: true },
   tracks: [{ type: String, trim: true }],
   artist: { type: String, required: true, trim: true },
