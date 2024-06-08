@@ -19,7 +19,7 @@ export const updateUser = async (id: string, updatedUser: Partial<User>): Promis
 };
 
 export const deleteUser = async (id: string): Promise<User | null> => {
-  return UserModel.findByIdAndRemove(id);
+  return UserModel.findByIdAndDelete(id);
 };
 
 export default { getAllUsers, getUserById, addUser, updateUser, deleteUser };

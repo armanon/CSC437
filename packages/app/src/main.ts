@@ -23,54 +23,89 @@ import { TrackEditElement } from "./views/track-edit";
 import { UserViewElement } from "./views/user-view";
 import { UserEditElement } from "./views/user-edit";
 import { HomeViewElement } from "./views/home-view";
+import { ConcertViewElement } from "./views/concert-view";
 
 const routes = [
   {
-    path: "/app/artist/:id/edit",
+    path: "/app/artists/:id/edit",
     view: (params: Switch.Params) => html`
       <artist-edit artist-id=${params.id}></artist-edit>
     `
   },
   {
-    path: "/app/artist/:id",
+    path: "/app/artists",
     view: (params: Switch.Params) => html`
-      <artist-view artist-id=${params.id}></artist-view>
+      <artist-view></artist-view>
     `
   },
   {
-    path: "/app/album/:id/edit",
+    path: "/app/artists/:id",
+    view: (params: Switch.Params) => html`
+      <artist-view id=${params.id}></artist-view>
+    `
+  },
+  {
+    path: "/app/albums/:id/edit",
     view: (params: Switch.Params) => html`
       <album-edit album-id=${params.id}></album-edit>
     `
   },
   {
-    path: "/app/album/:id",
+    path: "/app/albums",
     view: (params: Switch.Params) => html`
-      <album-view album-id=${params.id}></album-view>
+      <album-view></album-view>
     `
   },
   {
-    path: "/app/genre/:id/edit",
+    path: "/app/albums/:id",
+    view: (params: Switch.Params) => html`
+      <album-view id=${params.id}></album-view>
+    `
+  },
+  {
+    path: "/app/concerts",
+    view: (params: Switch.Params) => html`
+      <concert-view></concert-view>`
+  },
+  {
+    path: "/app/concerts/:id",
+    view: (params: Switch.Params) => html`
+      <concert-view id=${params.id}></concert-view>`
+  },
+  {
+    path: "/app/genres/:id/edit",
     view: (params: Switch.Params) => html`
       <genre-edit genre-id=${params.id}></genre-edit>
     `
   },
   {
-    path: "/app/genre/:id",
+    path: "/app/genres/:id",
     view: (params: Switch.Params) => html`
-      <genre-view genre-id=${params.id}></genre-view>
+      <genre-view id=${params.id}></genre-view>
     `
   },
   {
-    path: "/app/playlist/:id/edit",
+    path: "/app/genres",
+    view: (params: Switch.Params) => html`
+      <genre-view></genre-view>
+    `
+  },
+  {
+    path: "/app/playlists/:id/edit",
     view: (params: Switch.Params) => html`
       <playlist-edit playlist-id=${params.id}></playlist-edit>
     `
   },
   {
-    path: "/app/playlist/:id",
+    path: "/app/playlists",
     view: (params: Switch.Params) => html`
-      <playlist-view playlist-id=${params.id}></playlist-view>
+      <playlist-view ></playlist-view>
+    `
+  },
+  {
+    path: "/app/playlists/:id",
+    view: (params: Switch.Params) => html`
+      <playlist-view id=${params.id}></playlist-view>
     `
   },
   {
@@ -134,5 +169,6 @@ define({
   "track-edit": TrackEditElement,
   "user-view": UserViewElement,
   "user-edit": UserEditElement,
-  "home-view": HomeViewElement
+  "home-view": HomeViewElement,
+  "concert-view": ConcertViewElement,
 });

@@ -54,12 +54,19 @@ module.exports = __toCommonJS(user_routes_exports);
 var import_express = __toESM(require("express"));
 var userService = __toESM(require("../services/user-svc"));
 const router = import_express.default.Router();
+const getErrorMessage = (u) => {
+  if (u && typeof u === "object" && "message" in u && typeof u.message === "string") {
+    return u.message;
+  } else {
+    return "Unknown Error";
+  }
+};
 router.get("/", (req, res) => __async(void 0, null, function* () {
   try {
     const users = yield userService.getAllUsers();
     res.json(users);
   } catch (err) {
-    res.status(500).send(err.message);
+    res.status(500).send(getErrorMessage(err));
   }
 }));
 router.get("/:id", (req, res) => __async(void 0, null, function* () {
@@ -71,7 +78,7 @@ router.get("/:id", (req, res) => __async(void 0, null, function* () {
       res.status(404).send("User not found");
     }
   } catch (err) {
-    res.status(500).send(err.message);
+    res.status(500).send(getErrorMessage(err));
   }
 }));
 router.post("/", (req, res) => __async(void 0, null, function* () {
@@ -79,7 +86,7 @@ router.post("/", (req, res) => __async(void 0, null, function* () {
     const newUser = yield userService.addUser(req.body);
     res.status(201).json(newUser);
   } catch (err) {
-    res.status(500).send(err.message);
+    res.status(500).send(getErrorMessage(err));
   }
 }));
 router.put("/:id", (req, res) => __async(void 0, null, function* () {
@@ -91,7 +98,7 @@ router.put("/:id", (req, res) => __async(void 0, null, function* () {
       res.status(404).send("User not found");
     }
   } catch (err) {
-    res.status(500).send(err.message);
+    res.status(500).send(getErrorMessage(err));
   }
 }));
 router.delete("/:id", (req, res) => __async(void 0, null, function* () {
@@ -103,7 +110,7 @@ router.delete("/:id", (req, res) => __async(void 0, null, function* () {
       res.status(404).send("User not found");
     }
   } catch (err) {
-    res.status(500).send(err.message);
+    res.status(500).send(getErrorMessage(err));
   }
 }));
 var user_routes_default = router;

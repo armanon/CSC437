@@ -20,5 +20,5 @@ export const updateAlbum = async (id: string, updatedAlbum: Partial<Album>): Pro
 };
 
 export const deleteAlbum = async (id: string): Promise<Album | null> => {
-  return AlbumModel.findByIdAndRemove(id);
+  return AlbumModel.findByIdAndDelete(id);
 };

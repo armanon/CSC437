@@ -22,13 +22,13 @@ var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__ge
   mod
 ));
 var import_express = __toESM(require("express"));
-var import_artists = __toESM(require("./routes/artists"));
-var import_album = __toESM(require("./routes/album"));
-var import_tracks = __toESM(require("./routes/tracks"));
-var import_genres = __toESM(require("./routes/genres"));
-var import_playlists = __toESM(require("./routes/playlists"));
-var import_concerts = __toESM(require("./routes/concerts"));
-var import_users = __toESM(require("./routes/users"));
+var import_artists_routes = __toESM(require("./routes/artists-routes"));
+var import_albums_routes = __toESM(require("./routes/albums-routes"));
+var import_tracks_routes = __toESM(require("./routes/tracks-routes"));
+var import_genres_routes = __toESM(require("./routes/genres-routes"));
+var import_playlists_routes = __toESM(require("./routes/playlists-routes"));
+var import_concerts_routes = __toESM(require("./routes/concerts-routes"));
+var import_users_routes = __toESM(require("./routes/users-routes"));
 var import_auth = __toESM(require("./routes/auth"));
 var import_mongo = require("./services/mongo");
 var import_promises = __toESM(require("node:fs/promises"));
@@ -46,18 +46,38 @@ app.use("/auth", import_auth.default);
 app.use(
   "/api/artists",
   /*authenticateUser,*/
-  import_artists.default
+  import_artists_routes.default
 );
 app.use(
   "/api/albums",
   /*authenticateUser,*/
-  import_album.default
+  import_albums_routes.default
 );
-app.use("/api/tracks", import_auth.authenticateUser, import_tracks.default);
-app.use("/api/genres", import_auth.authenticateUser, import_genres.default);
-app.use("/api/playlists", import_auth.authenticateUser, import_playlists.default);
-app.use("/api/concerts", import_auth.authenticateUser, import_concerts.default);
-app.use("/api/users", import_auth.authenticateUser, import_users.default);
+app.use(
+  "/api/tracks",
+  /*authenticateUser,*/
+  import_tracks_routes.default
+);
+app.use(
+  "/api/genres",
+  /*authenticateUser,*/
+  import_genres_routes.default
+);
+app.use(
+  "/api/playlists",
+  /*authenticateUser,*/
+  import_playlists_routes.default
+);
+app.use(
+  "/api/concerts",
+  /*authenticateUser,*/
+  import_concerts_routes.default
+);
+app.use(
+  "/api/users",
+  /*authenticateUser,*/
+  import_users_routes.default
+);
 app.use("/app", (req, res) => {
   const indexHtml = import_path.default.resolve(staticDir, "index.html");
   import_promises.default.readFile(indexHtml, { encoding: "utf8" }).then(

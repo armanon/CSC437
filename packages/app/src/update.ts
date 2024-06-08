@@ -1,6 +1,11 @@
 import { Auth, Update } from "@calpoly/mustang";
 import { Msg } from "./messages";
 import { Model } from "./model";
+import { Artist } from "server/models/artist";
+import { Album } from "server/models/album";
+import { Concert } from "server/models/concert";
+import { Genre } from "server/models/genre";
+import { Playlist } from "server/models/playlist";
 
 export default function update(
   message: Msg,
@@ -9,6 +14,10 @@ export default function update(
 ) {
   console.log(`Updating for message:`, message);
   switch (message[0]) {
+    case "concert/select":
+      loadConcert(message[1], user)
+          .then(concerts => apply(model => ({...model, concerts})))
+      break;
     case "artist/save":
       saveArtist(message[1], user)
         .then((artist) =>
@@ -24,15 +33,15 @@ export default function update(
         });
       break;
       case "artist/select":
-        loadArtist(message[1], user)
-      .then((artist) =>
-                apply((model) => ({ ...model, artist:[artist] }))
-              )
-        break;
+      loadArtist(message[1], user)
+          .then((artists) =>
+            apply((model) => ({ ...model, artists }))
+               )
+      break;
     case "album/select":
 	loadAlbum(message[1], user)
-.then((album) =>
-          apply((model) => ({ ...model, album }))
+.then((albums) =>
+          apply((model) => ({ ...model, albums }))
         )
 	break;
     case "album/save":
@@ -62,6 +71,14 @@ export default function update(
           const { onFailure } = message[1];
           if (onFailure) onFailure(error);
         });
+      break;
+    case "genre/select":
+      loadGenre(message[1], user)
+          .then(genres => apply(model => ({ ...model, genres })))
+      break;
+    case "playlist/select":
+      loadPlaylist(message[1], user)
+          .then(playlists => apply(model => ({ ...model, playlists })));
       break;
     case "playlist/save":
       savePlaylist(message[1], user)
@@ -141,38 +158,44 @@ function saveArtist(
 
 function loadArtist(
   msg: {
-      artistId: string;
+      artistId?: string;
   }, user: Auth.User){
-  return fetch(`/api/artists/${msg.artistId}`, {
-     
+  const url = msg.artistId ? `/api/artists/${msg.artistId}` : '/api/artists';
+
+  return fetch(url, {
       headers: {
         "Content-Type": "application/json",
         ...Auth.headers(user)
       },
-      
     })
       .then((response: Response) => {
-        debugger
-        if (response.status === 200) return response.json();
+        if (response.status === 200)
+          return response.json();
         else
           throw new Error(
-            `Failed to save album for ${msg.artistId}`
+            `Failed to get artist for ${msg.artistId}`
           );
       })
       .then((json: unknown) => {
-        debugger
-        if (json) return json as Artist;
-        return undefined;
+        if (json && Array.isArray(json)) {
+          return json as Artist[];
+        } else if (json && typeof json == 'object') {
+          return [json] as Artist[];
+        } else {
+          throw new Error(
+            `Invalid response body ${JSON.stringify(json)}`
+          )
+        }
       });
   }
 
 
 function loadAlbum(
 msg: {
-    albumId: string;
+    albumId?: string;
 }, user: Auth.User){
-return fetch(`/api/albums/${msg.albumId}`, {
-   
+  const url = msg.albumId ? `/api/albums/${msg.albumId}` : '/api/albums';
+return fetch(url, {
     headers: {
       "Content-Type": "application/json",
       ...Auth.headers(user)
@@ -187,8 +210,15 @@ return fetch(`/api/albums/${msg.albumId}`, {
         );
     })
     .then((json: unknown) => {
-      if (json) return json as Album;
-      return undefined;
+      if (json && Array.isArray(json)) {
+          return json as Album[];
+        } else if (json && typeof json == 'object') {
+          return [json] as Album[];
+        } else {
+          throw new Error(
+            `Invalid response body ${JSON.stringify(json)}`
+          )
+        }
     });
 }
 
@@ -329,5 +359,89 @@ function saveUser(
     .then((json: unknown) => {
       if (json) return json as User;
       return undefined;
+    });
+}
+function loadConcert(msg: { concertId?: string }, user: Auth.User): Promise<Concert[]> {
+    const url = msg.concertId ? `/api/concerts/${msg.concertId}` : '/api/concerts';
+return fetch(url, {
+    headers: {
+      "Content-Type": "application/json",
+      ...Auth.headers(user)
+    },
+
+  })
+    .then((response: Response) => {
+      if (response.status === 200) return response.json();
+      else
+        throw new Error(
+          `Failed to get concert for ${msg.concertId}`
+        );
+    })
+    .then((json: unknown) => {
+      if (json && Array.isArray(json)) {
+          return json as Concert[];
+        } else if (json && typeof json == 'object') {
+          return [json] as Concert[];
+        } else {
+          throw new Error(
+            `Invalid response body ${JSON.stringify(json)}`
+          )
+        }
+    });
+}
+function loadGenre(msg: { genreId?: string }, user: Auth.User) {
+const url = msg.genreId ? `/api/genres/${msg.genreId}` : '/api/genres';
+return fetch(url, {
+    headers: {
+      "Content-Type": "application/json",
+      ...Auth.headers(user)
+    },
+
+  })
+    .then((response: Response) => {
+      if (response.status === 200) return response.json();
+      else
+        throw new Error(
+          `Failed to get genre for ${msg.genreId}`
+        );
+    })
+    .then((json: unknown) => {
+      if (json && Array.isArray(json)) {
+          return json as Genre[];
+        } else if (json && typeof json == 'object') {
+          return [json] as Genre[];
+        } else {
+          throw new Error(
+            `Invalid response body ${JSON.stringify(json)}`
+          )
+        }
+    });
+}
+function loadPlaylist(msg: { playListId?: string }, user: Auth.User) {
+const url = msg.playListId ? `/api/playlists/${msg.playListId}` : '/api/playlists';
+return fetch(url, {
+    headers: {
+      "Content-Type": "application/json",
+      ...Auth.headers(user)
+    },
+
+  })
+    .then((response: Response) => {
+      if (response.status === 200) return response.json();
+      else
+        throw new Error(
+          `Failed to get playlist for ${msg.playListId}`
+        );
+    })
+    .then((json: unknown) => {
+      if (json && Array.isArray(json)) {
+          return json as Playlist[];
+        } else if (json && typeof json == 'object') {
+          return [json] as Playlist[];
+        } else {
+          throw new Error(
+            `Invalid response body ${JSON.stringify(json)}`
+          )
+        }
     });
 }

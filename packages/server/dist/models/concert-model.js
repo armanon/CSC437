@@ -38,8 +38,7 @@ const concertSchema = new import_mongoose.default.Schema({
   id: { type: String, required: true, trim: true },
   title: { type: String, required: true, trim: true },
   date: { type: Date, required: true },
-  venue: { type: String, required: true, trim: true },
-  artists: [{ type: String, trim: true }]
+  venue: { type: String, required: true, trim: true }
 }, { collection: "concerts" });
 const ConcertModel = import_mongoose.default.model("Concert", concertSchema);
 // Annotate the CommonJS export names for ESM import in node:

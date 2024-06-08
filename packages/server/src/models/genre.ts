@@ -1,6 +1,5 @@
 // src/models/genre.ts
 export interface Genre {
-  id: string;
+  _id: string;
   name: string;
-  description: string;
 }

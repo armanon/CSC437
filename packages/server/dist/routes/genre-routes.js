@@ -54,12 +54,19 @@ module.exports = __toCommonJS(genre_routes_exports);
 var import_express = __toESM(require("express"));
 var genreService = __toESM(require("../services/genre-svc"));
 const router = import_express.default.Router();
+const getErrorMessage = (u) => {
+  if (u && typeof u === "object" && "message" in u && typeof u.message === "string") {
+    return u.message;
+  } else {
+    return "Unknown Error";
+  }
+};
 router.get("/", (req, res) => __async(void 0, null, function* () {
   try {
     const genres = yield genreService.getAllGenres();
     res.json(genres);
   } catch (err) {
-    res.status(500).send(err.message);
+    res.status(500).send(getErrorMessage(err));
   }
 }));
 router.get("/:id", (req, res) => __async(void 0, null, function* () {
@@ -71,7 +78,7 @@ router.get("/:id", (req, res) => __async(void 0, null, function* () {
       res.status(404).send("Genre not found");
     }
   } catch (err) {
-    res.status(500).send(err.message);
+    res.status(500).send(getErrorMessage(err));
   }
 }));
 router.post("/", (req, res) => __async(void 0, null, function* () {
@@ -79,7 +86,7 @@ router.post("/", (req, res) => __async(void 0, null, function* () {
     const newGenre = yield genreService.addGenre(req.body);
     res.status(201).json(newGenre);
   } catch (err) {
-    res.status(500).send(err.message);
+    res.status(500).send(getErrorMessage(err));
   }
 }));
 router.put("/:id", (req, res) => __async(void 0, null, function* () {
@@ -91,7 +98,7 @@ router.put("/:id", (req, res) => __async(void 0, null, function* () {
       res.status(404).send("Genre not found");
     }
   } catch (err) {
-    res.status(500).send(err.message);
+    res.status(500).send(getErrorMessage(err));
   }
 }));
 router.delete("/:id", (req, res) => __async(void 0, null, function* () {
@@ -103,7 +110,7 @@ router.delete("/:id", (req, res) => __async(void 0, null, function* () {
       res.status(404).send("Genre not found");
     }
   } catch (err) {
-    res.status(500).send(err.message);
+    res.status(500).send(getErrorMessage(err));
   }
 }));
 var genre_routes_default = router;

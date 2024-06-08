@@ -1,69 +1,29 @@
 // src/views/album-view.ts
-import { define, View } from "@calpoly/mustang";
-import { css, html } from "lit";
-import { property, state } from "lit/decorators.js";
-import { Album, Genre } from "server/models";
+import { TemplateResult, html } from "lit";
 import { Msg } from "../messages";
 import { Model } from "../model";
+import { BaseViewElement } from "./base-view";
+import { Album } from "server/models/album";
 
-export class AlbumViewElement extends View<Model, Msg> {
-  @property({ attribute: "album-id", reflect: true })
-  albumid = "";
-
-  @state()
-  genreFilter: string = "all";
-
-  @property()
-  get album(): Album[] {
-    return this.model.album || [];
-  }
-
-  constructor() {
-    super("musik:model");
-  }
-
-  connectedCallback() {
-    super.connectedCallback();
-    this.addEventListener("genre-filter-change", (event: CustomEvent) => {
-      this.genreFilter = event.detail.genre;
-    });
-  }
-
-  attributeChangedCallback(
-    name: string,
-    oldValue: string,
-    newValue: string
-  ) {
-    if (
-      name === "album-id" &&
-      oldValue !== newValue &&
-      newValue
-    ) {
-      this.dispatchMessage([
-        "album/select",
-        { albumId: newValue }
-      ]);
+export class AlbumViewElement extends  BaseViewElement<Model, Msg, Album> {
+    getMessage(value: string | null) {
+      const msg = value ? { albumId: value } : {};
+      return ["album/select", msg];
     }
-    super.attributeChangedCallback(name, oldValue, newValue);
-  }
-
-  render() {
-    return html`
-      <div>
-                        ${this.album.title}
-                <a href="/app/album/${this.album._id}/edit">Edit</a>
-      </div>
-    `;
-  }
-
-  onGenreChange(event: Event) {
-    const select = event.target as HTMLSelectElement;
-    this.dispatchEvent(new CustomEvent("genre-filter-change", {
-      detail: { genre: select.value },
-      bubbles: true,
-      composed: true
-    }));
-  }
+    getValues(): Album[] {
+      return this.model.albums || [];
+    }
+    renderValue(value: Album): TemplateResult<1> {
+      const { _id: id, title, artist } = value;
+      return html`
+       <div>
+         <label for="${id}-title">Title:</label>
+         <label name="${id}-title">${title}</label>
+         <label for="${id}-artist">Artist:</label>
+         <label name="${id}-artist">${artist}</label>
+         <a href="/app/albums/${id}">View</a>
+         <a href="/app/albums/${id}/edit">Edit</a>
+       </div>
+`
+    }
 }
-
-

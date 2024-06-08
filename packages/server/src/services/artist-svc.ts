@@ -22,5 +22,5 @@ export const updateArtist = async (id: string, updatedArtist: Partial<Artist>): 
 };
 
 export const deleteArtist = async (id: string): Promise<Artist | null> => {
-  return ArtistModel.findByIdAndRemove(id);
+  return ArtistModel.findByIdAndDelete(id);
 };

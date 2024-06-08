@@ -54,12 +54,19 @@ module.exports = __toCommonJS(playlist_routes_exports);
 var import_express = __toESM(require("express"));
 var playlistService = __toESM(require("../services/playlist-svc"));
 const router = import_express.default.Router();
+const getErrorMessage = (u) => {
+  if (u && typeof u === "object" && "message" in u && typeof u.message === "string") {
+    return u.message;
+  } else {
+    return "Unknown Error";
+  }
+};
 router.get("/", (req, res) => __async(void 0, null, function* () {
   try {
     const playlists = yield playlistService.getAllPlaylists();
     res.json(playlists);
   } catch (err) {
-    res.status(500).send(err.message);
+    res.status(500).send(getErrorMessage(err));
   }
 }));
 router.get("/:id", (req, res) => __async(void 0, null, function* () {
@@ -71,7 +78,7 @@ router.get("/:id", (req, res) => __async(void 0, null, function* () {
       res.status(404).send("Playlist not found");
     }
   } catch (err) {
-    res.status(500).send(err.message);
+    res.status(500).send(getErrorMessage(err));
   }
 }));
 router.post("/", (req, res) => __async(void 0, null, function* () {
@@ -79,7 +86,7 @@ router.post("/", (req, res) => __async(void 0, null, function* () {
     const newPlaylist = yield playlistService.addPlaylist(req.body);
     res.status(201).json(newPlaylist);
   } catch (err) {
-    res.status(500).send(err.message);
+    res.status(500).send(getErrorMessage(err));
   }
 }));
 router.put("/:id", (req, res) => __async(void 0, null, function* () {
@@ -91,7 +98,7 @@ router.put("/:id", (req, res) => __async(void 0, null, function* () {
       res.status(404).send("Playlist not found");
     }
   } catch (err) {
-    res.status(500).send(err.message);
+    res.status(500).send(getErrorMessage(err));
   }
 }));
 router.delete("/:id", (req, res) => __async(void 0, null, function* () {
@@ -103,7 +110,7 @@ router.delete("/:id", (req, res) => __async(void 0, null, function* () {
       res.status(404).send("Playlist not found");
     }
   } catch (err) {
-    res.status(500).send(err.message);
+    res.status(500).send(getErrorMessage(err));
   }
 }));
 var playlist_routes_default = router;

@@ -61,7 +61,7 @@ const updatePlaylist = (id, updatedPlaylist) => __async(void 0, null, function* 
   return import_playlist_model.PlaylistModel.findByIdAndUpdate(id, updatedPlaylist, { new: true });
 });
 const deletePlaylist = (id) => __async(void 0, null, function* () {
-  return import_playlist_model.PlaylistModel.findByIdAndRemove(id);
+  return import_playlist_model.PlaylistModel.findByIdAndDelete(id);
 });
 var playlist_svc_default = { getAllPlaylists, getPlaylistById, addPlaylist, updatePlaylist, deletePlaylist };
 // Annotate the CommonJS export names for ESM import in node:

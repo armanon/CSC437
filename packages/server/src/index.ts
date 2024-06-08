@@ -1,11 +1,11 @@
 import express, { Request, Response } from 'express';
-import artistRouter from './routes/artists';
-import albumRouter from './routes/album'; // corrected to plural 'albums'
-import trackRouter from './routes/tracks';
-import genreRouter from './routes/genres';
-import playlistRouter from './routes/playlists';
-import concertRouter from './routes/concerts';
-import userRouter from './routes/users';
+import artistRouter from './routes/artists-routes';
+import albumRouter from './routes/albums-routes';
+import trackRouter from './routes/tracks-routes';
+import genreRouter from './routes/genres-routes';
+import playlistRouter from './routes/playlists-routes';
+import concertRouter from './routes/concerts-routes';
+import userRouter from './routes/users-routes';
 
 import auth, { authenticateUser } from "./routes/auth"; // Import auth and authenticateUser
 
@@ -35,11 +35,11 @@ app.use("/node_modules", express.static(nodeModules));
 app.use('/auth', auth); // Add auth routes
 app.use('/api/artists', /*authenticateUser,*/ artistRouter);
 app.use('/api/albums', /*authenticateUser,*/ albumRouter); // corrected to plural 'albums'
-app.use('/api/tracks', authenticateUser, trackRouter);
-app.use('/api/genres', authenticateUser, genreRouter);
-app.use('/api/playlists', authenticateUser, playlistRouter);
-app.use('/api/concerts', authenticateUser, concertRouter);
-app.use('/api/users', authenticateUser, userRouter);
+app.use('/api/tracks', /*authenticateUser,*/ trackRouter);
+app.use('/api/genres', /*authenticateUser,*/ genreRouter);
+app.use('/api/playlists', /*authenticateUser,*/ playlistRouter);
+app.use('/api/concerts', /*authenticateUser,*/ concertRouter);
+app.use('/api/users', /*authenticateUser,*/ userRouter);
 
 // Serve the SPA for any /app/... requests
 app.use("/app", (req: Request, res: Response) => {

@@ -61,7 +61,7 @@ const updateGenre = (id, updatedGenre) => __async(void 0, null, function* () {
   return import_genre_model.GenreModel.findByIdAndUpdate(id, updatedGenre, { new: true });
 });
 const deleteGenre = (id) => __async(void 0, null, function* () {
-  return import_genre_model.GenreModel.findByIdAndRemove(id);
+  return import_genre_model.GenreModel.findByIdAndDelete(id);
 });
 var genre_svc_default = { getAllGenres, getGenreById, addGenre, updateGenre, deleteGenre };
 // Annotate the CommonJS export names for ESM import in node:

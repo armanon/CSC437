@@ -54,12 +54,19 @@ module.exports = __toCommonJS(artist_routes_exports);
 var import_express = __toESM(require("express"));
 var artistService = __toESM(require("../services/artist-svc"));
 const router = import_express.default.Router();
+const getErrorMessage = (u) => {
+  if (u && typeof u === "object" && "message" in u && typeof u.message === "string") {
+    return u.message;
+  } else {
+    return "Unknown Error";
+  }
+};
 router.get("/", (req, res) => __async(void 0, null, function* () {
   try {
     const artists = yield artistService.getAllArtists();
     res.json(artists);
   } catch (err) {
-    res.status(500).send(err.message);
+    res.status(500).send(getErrorMessage(err));
   }
 }));
 router.get("/:id", (req, res) => __async(void 0, null, function* () {
@@ -71,7 +78,7 @@ router.get("/:id", (req, res) => __async(void 0, null, function* () {
       res.status(404).send("Artist not found");
     }
   } catch (err) {
-    res.status(500).send(err.message);
+    res.status(500).send(getErrorMessage(err));
   }
 }));
 router.post("/", (req, res) => __async(void 0, null, function* () {
@@ -79,7 +86,7 @@ router.post("/", (req, res) => __async(void 0, null, function* () {
     const newArtist = yield artistService.addArtist(req.body);
     res.status(201).json(newArtist);
   } catch (err) {
-    res.status(500).send(err.message);
+    res.status(500).send(getErrorMessage(err));
   }
 }));
 router.put("/:id", (req, res) => __async(void 0, null, function* () {
@@ -91,7 +98,7 @@ router.put("/:id", (req, res) => __async(void 0, null, function* () {
       res.status(404).send("Artist not found");
     }
   } catch (err) {
-    res.status(500).send(err.message);
+    res.status(500).send(getErrorMessage(err));
   }
 }));
 router.delete("/:id", (req, res) => __async(void 0, null, function* () {
@@ -103,7 +110,7 @@ router.delete("/:id", (req, res) => __async(void 0, null, function* () {
       res.status(404).send("Artist not found");
     }
   } catch (err) {
-    res.status(500).send(err.message);
+    res.status(500).send(getErrorMessage(err));
   }
 }));
 var artist_routes_default = router;

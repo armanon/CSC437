@@ -36,10 +36,7 @@ var import_mongoose = __toESM(require("mongoose"));
 var import_user = require("./user");
 const userSchema = new import_mongoose.default.Schema({
   id: { type: String, required: true, trim: true },
-  name: { type: String, required: true, trim: true },
-  email: { type: String, required: true, trim: true, unique: true },
-  password: { type: String, required: true },
-  favoriteGenres: [{ type: String, trim: true }]
+  email: { type: String, required: true, trim: true, unique: true }
 }, { collection: "users" });
 const UserModel = import_mongoose.default.model("User", userSchema);
 // Annotate the CommonJS export names for ESM import in node:

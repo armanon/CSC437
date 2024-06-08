@@ -19,7 +19,7 @@ export const updateGenre = async (id: string, updatedGenre: Partial<Genre>): Pro
 };
 
 export const deleteGenre = async (id: string): Promise<Genre | null> => {
-  return GenreModel.findByIdAndRemove(id);
+  return GenreModel.findByIdAndDelete(id);
 };
 
 export default { getAllGenres, getGenreById, addGenre, updateGenre, deleteGenre };

@@ -61,7 +61,7 @@ const updateUser = (id, updatedUser) => __async(void 0, null, function* () {
   return import_user_model.UserModel.findByIdAndUpdate(id, updatedUser, { new: true });
 });
 const deleteUser = (id) => __async(void 0, null, function* () {
-  return import_user_model.UserModel.findByIdAndRemove(id);
+  return import_user_model.UserModel.findByIdAndDelete(id);
 });
 var user_svc_default = { getAllUsers, getUserById, addUser, updateUser, deleteUser };
 // Annotate the CommonJS export names for ESM import in node:

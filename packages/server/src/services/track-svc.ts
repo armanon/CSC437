@@ -19,7 +19,7 @@ export const updateTrack = async (id: string, updatedTrack: Partial<Track>): Pro
 };
 
 export const deleteTrack = async (id: string): Promise<Track | null> => {
-  return TrackModel.findByIdAndRemove(id);
+  return TrackModel.findByIdAndDelete(id);
 };
 
 export default { getAllTracks, getTrackById, addTrack, updateTrack, deleteTrack };

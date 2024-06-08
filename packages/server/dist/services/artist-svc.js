@@ -64,7 +64,7 @@ const updateArtist = (id, updatedArtist) => __async(void 0, null, function* () {
   return updated;
 });
 const deleteArtist = (id) => __async(void 0, null, function* () {
-  return import_artist_model.ArtistModel.findByIdAndRemove(id);
+  return import_artist_model.ArtistModel.findByIdAndDelete(id);
 });
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {

@@ -62,7 +62,7 @@ const updateAlbum = (id, updatedAlbum) => __async(void 0, null, function* () {
   return import_album_model.AlbumModel.findByIdAndUpdate(id, updatedAlbum, { new: true });
 });
 const deleteAlbum = (id) => __async(void 0, null, function* () {
-  return import_album_model.AlbumModel.findByIdAndRemove(id);
+  return import_album_model.AlbumModel.findByIdAndDelete(id);
 });
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {

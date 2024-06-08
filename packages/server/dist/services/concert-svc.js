@@ -61,7 +61,7 @@ const updateConcert = (id, updatedConcert) => __async(void 0, null, function* ()
   return import_concert_model.ConcertModel.findByIdAndUpdate(id, updatedConcert, { new: true });
 });
 const deleteConcert = (id) => __async(void 0, null, function* () {
-  return import_concert_model.ConcertModel.findByIdAndRemove(id);
+  return import_concert_model.ConcertModel.findByIdAndDelete(id);
 });
 var concert_svc_default = { getAllConcerts, getConcertById, addConcert, updateConcert, deleteConcert };
 // Annotate the CommonJS export names for ESM import in node:

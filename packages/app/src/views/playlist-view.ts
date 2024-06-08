@@ -1,68 +1,28 @@
 // src/views/playlist-view.ts
-import { define, View } from "@calpoly/mustang";
-import { css, html } from "lit";
-import { property, state } from "lit/decorators.js";
-import { Playlist, Genre } from "server/models";
+import { TemplateResult, html } from "lit";
+import { Playlist } from 'server/models/playlist';
 import { Msg } from "../messages";
 import { Model } from "../model";
+import { BaseViewElement } from "./base-view";
 
-export class PlaylistViewElement extends View<Model, Msg> {
-  @property({ attribute: "playlist-id", reflect: true })
-  playlistid = "";
-
-  @state()
-  genreFilter: string = "all";
-
-  @property()
-  get playlists(): Playlist[] {
-    return this.model.playlists || [];
-  }
-
-  constructor() {
-    super("musik:model");
-  }
-
-  connectedCallback() {
-    super.connectedCallback();
-    this.addEventListener("genre-filter-change", (event: CustomEvent) => {
-      this.genreFilter = event.detail.genre;
-    });
-  }
-
-  render() {
-    const filteredPlaylists = this.genreFilter === "all" ? this.playlists : this.playlists.filter(playlist => playlist.genre === this.genreFilter);
-    return html`
-      <div>
-        <label for="genreFilter">Filter by genre:</label>
-        <select id="genreFilter" @change=${this.onGenreChange}>
-          <option value="all">All</option>
-          ${this.model.genres.map(
-            genre => html`
-              <option value="${genre.name}">${genre.name}</option>
-            `
-          )}
-        </select>
-        <ul>
-          ${filteredPlaylists.map(
-            playlist => html`
-              <li>
-                ${playlist.name}
-                <a href="/app/playlist/${playlist._id}/edit">Edit</a>
-              </li>
-            `
-          )}
-        </ul>
-      </div>
-    `;
-  }
-
-  onGenreChange(event: Event) {
-    const select = event.target as HTMLSelectElement;
-    this.dispatchEvent(new CustomEvent("genre-filter-change", {
-      detail: { genre: select.value },
-      bubbles: true,
-      composed: true
-    }));
-  }
+export class PlaylistViewElement extends  BaseViewElement<Model, Msg, Playlist> {
+    getMessage(value: string | null) {
+      console.log("value", value)
+      const msg = value ? { playListId: value } : {};
+      return ["playlist/select", msg];
+    }
+    getValues(): Playlist[] {
+      return this.model.playlists || [];
+    }
+    renderValue(value: Playlist): TemplateResult<1> {
+      const { _id: id, title } = value;
+      return html`
+       <div>
+         <label for="${id}-title">Title:</label>
+         <label name="${id}-title">${title}</label>
+         <a href="/app/playlists/${id}">View</a>
+         <a href="/app/playlists/${id}/edit">Edit</a>
+       </div>
+`
+    }
 }
-

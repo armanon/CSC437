@@ -19,7 +19,7 @@ export const updateConcert = async (id: string, updatedConcert: Partial<Concert>
 };
 
 export const deleteConcert = async (id: string): Promise<Concert | null> => {
-  return ConcertModel.findByIdAndRemove(id);
+  return ConcertModel.findByIdAndDelete(id);
 };
 
 export default { getAllConcerts, getConcertById, addConcert, updateConcert, deleteConcert };

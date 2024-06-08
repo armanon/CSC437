@@ -37,9 +37,7 @@ var import_playlist = require("./playlist");
 const playlistSchema = new import_mongoose.default.Schema({
   id: { type: String, required: true, trim: true },
   title: { type: String, required: true, trim: true },
-  description: { type: String, trim: true },
-  tracks: [{ type: String, trim: true }],
-  createdBy: { type: String, required: true, trim: true }
+  tracks: [{ type: String, trim: true }]
 }, { collection: "playlists" });
 const PlaylistModel = import_mongoose.default.model("Playlist", playlistSchema);
 // Annotate the CommonJS export names for ESM import in node:

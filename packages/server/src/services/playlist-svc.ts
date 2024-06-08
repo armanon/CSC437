@@ -19,7 +19,7 @@ export const updatePlaylist = async (id: string, updatedPlaylist: Partial<Playli
 };
 
 export const deletePlaylist = async (id: string): Promise<Playlist | null> => {
-  return PlaylistModel.findByIdAndRemove(id);
+  return PlaylistModel.findByIdAndDelete(id);
 };
 
 export default { getAllPlaylists, getPlaylistById, addPlaylist, updatePlaylist, deletePlaylist };

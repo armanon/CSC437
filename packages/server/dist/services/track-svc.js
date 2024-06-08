@@ -61,7 +61,7 @@ const updateTrack = (id, updatedTrack) => __async(void 0, null, function* () {
   return import_track_model.TrackModel.findByIdAndUpdate(id, updatedTrack, { new: true });
 });
 const deleteTrack = (id) => __async(void 0, null, function* () {
-  return import_track_model.TrackModel.findByIdAndRemove(id);
+  return import_track_model.TrackModel.findByIdAndDelete(id);
 });
 var track_svc_default = { getAllTracks, getTrackById, addTrack, updateTrack, deleteTrack };
 // Annotate the CommonJS export names for ESM import in node:
