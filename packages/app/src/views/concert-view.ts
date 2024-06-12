@@ -1,12 +1,12 @@
 // src/views/concert-view.ts
 import { TemplateResult, html } from "lit";
-import { Msg } from "../messages";
+import { ConcertSelectMessage } from "../messages";
 import { Model } from "../model";
 import { BaseViewElement } from "./base-view";
 import { Concert } from "server/models/concert";
 
-export class ConcertViewElement extends  BaseViewElement<Model, Msg, Concert> {
-    getMessage(value: string | null) {
+export class ConcertViewElement extends  BaseViewElement<Model, ConcertSelectMessage, Concert> {
+    getMessage(value: string | null): ConcertSelectMessage {
       console.log("value", value)
       const msg = value ? { concertId: value } : {};
       return ["concert/select", msg];

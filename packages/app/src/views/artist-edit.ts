@@ -1,7 +1,7 @@
 import { define, Form, History, View } from "@calpoly/mustang";
 import { css, html } from "lit";
 import { property } from "lit/decorators.js";
-import { Artist } from "server/models";
+import { Artist } from "server/models/artist";
 import { Msg } from "../messages";
 import { Model } from "../model";
 
@@ -15,7 +15,7 @@ export class ArtistEditElement extends View<Model, Msg> {
 
   @property()
   get artist(): Artist | undefined {
-    return this.model.artist;
+    return this.model.artists[0];
   }
 
   render() {

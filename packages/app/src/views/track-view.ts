@@ -1,69 +1,30 @@
 // src/views/track-view.ts
-import { define, View } from "@calpoly/mustang";
-import { css, html } from "lit";
-import { property, state } from "lit/decorators.js";
-import { Track, Genre } from "server/models";
-import { Msg } from "../messages";
+import { TemplateResult, html } from "lit";
+import { Track } from "server/models/track";
+import { TrackSelectMessage } from "../messages";
 import { Model } from "../model";
+import { BaseViewElement } from "./base-view";
 
-export class TrackViewElement extends View<Model, Msg> {
-  @property({ attribute: "track-id", reflect: true })
-  trackid = "";
+export class TrackViewElement extends BaseViewElement<Model, TrackSelectMessage, Track> {
+    getMessage(value: string | null): TrackSelectMessage {
+      const msg =  value ? { trackId: value } : {};
+      return ["track/select", msg];
+    }
+    getValues(): Track[] {
+      return this.model.tracks || [];
+    }
+    renderValue(value: Track): TemplateResult<1> {
+      const { _id: id, title, duration } = value;
+        return html`
+        <div>
+         <label for="${id}-title">Title:</label>
+         <label title="${id}-title">${title}</label>
+         <label for="${id}-duration">Duration:</label>
+         <label duration="${id}-duration">${duration}</label>
+         <a href="/app/tracks/${id}">View</a>
+         <a href="/app/tracks/${id}/edit">Edit</a>
+       </div>
+`
+    }
 
-  @state()
-  genreFilter: string = "all";
-
-  @property()
-  get tracks(): Track[] {
-    return this.model.tracks || [];
-  }
-
-  constructor() {
-    super("musik:model");
-  }
-
-  connectedCallback() {
-    super.connectedCallback();
-    this.addEventListener("genre-filter-change", (event: CustomEvent) => {
-      this.genreFilter = event.detail.genre;
-    });
-  }
-
-  render() {
-    const filteredTracks = this.genreFilter === "all" ? this.tracks : this.tracks.filter(track => track.genre === this.genreFilter);
-    return html`
-      <div>
-        <label for="genreFilter">Filter by genre:</label>
-        <select id="genreFilter" @change=${this.onGenreChange}>
-          <option value="all">All</option>
-          ${this.model.genres.map(
-            genre => html`
-              <option value="${genre.name}">${genre.name}</option>
-            `
-          )}
-        </select>
-        <ul>
-          ${filteredTracks.map(
-            track => html`
-              <li>
-                ${track.title}
-                <a href="/app/track/${track._id}/edit">Edit</a>
-              </li>
-            `
-          )}
-        </ul>
-      </div>
-    `;
-  }
-
-  onGenreChange(event: Event) {
-    const select = event.target as HTMLSelectElement;
-    this.dispatchEvent(new CustomEvent("genre-filter-change", {
-      detail: { genre: select.value },
-      bubbles: true,
-      composed: true
-    }));
-  }
 }
-
-

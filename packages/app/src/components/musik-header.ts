@@ -1,10 +1,10 @@
 // src/components/musik-header.ts
 import { LitElement, css, html } from "lit";
-import { DropdownElement, define } from "@calpoly/mustang";
+import { Dropdown, define } from "@calpoly/mustang";
 
 export class MusikHeaderElement extends LitElement {
   static uses = define({
-    "drop-down": DropdownElement
+    "drop-down": Dropdown.Element,
   });
 
   static styles = css`

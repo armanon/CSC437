@@ -1,12 +1,12 @@
 // src/views/album-view.ts
 import { TemplateResult, html } from "lit";
-import { Msg } from "../messages";
+import { AlbumSelectMessage } from "../messages";
 import { Model } from "../model";
 import { BaseViewElement } from "./base-view";
 import { Album } from "server/models/album";
 
-export class AlbumViewElement extends  BaseViewElement<Model, Msg, Album> {
-    getMessage(value: string | null) {
+export class AlbumViewElement extends  BaseViewElement<Model, AlbumSelectMessage, Album> {
+    getMessage(value: string | null): AlbumSelectMessage {
       const msg = value ? { albumId: value } : {};
       return ["album/select", msg];
     }

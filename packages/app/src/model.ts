@@ -1,10 +1,10 @@
-import { Artist } from "server/dist/models/artist";
-import { Genre } from "server/dist/models/genre";
-import { Album } from "server/dist/models/album";
-import { Concert } from "server/dist/models/concert";
-import { Playlist } from "server/dist/models/playlist";
-import { Track } from "server/dist/models/track";
-import { User } from "server/dist/models/user";
+import { Artist } from "server/models/artist";
+import { Genre } from "server/models/genre";
+import { Album } from "server/models/album";
+import { Concert } from "server/models/concert";
+import { Playlist } from "server/models/playlist";
+import { Track } from "server/models/track";
+import { User } from "server/models/user";
 
 export interface Model {
   artists: Artist[];

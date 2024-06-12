@@ -1,8 +1,9 @@
-import { View, Message } from "@calpoly/mustang";
+import { View } from "@calpoly/mustang";
 import { html, TemplateResult } from "lit";
 import { property } from "lit/decorators.js";
+import { Msg } from "../messages";
 
-export abstract class BaseViewElement<TModel extends object, TMsg extends Message.Base, TField> extends View<TModel, TMsg> {
+export abstract class BaseViewElement<TModel extends object, TMsg extends Msg, TField> extends View<TModel, TMsg> {
   @property({ attribute: "id", reflect: true })
   id = "";
 

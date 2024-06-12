@@ -1,12 +1,12 @@
 // src/views/genre-view.ts
 import { TemplateResult, html } from "lit";
 import { Genre } from 'server/models/genre';
-import { Msg } from "../messages";
+import { GenreSelectMessage } from "../messages";
 import { Model } from "../model";
 import { BaseViewElement } from "./base-view";
 
-export class GenreViewElement extends  BaseViewElement<Model, Msg, Genre> {
-    getMessage(value: string | null) {
+export class GenreViewElement extends  BaseViewElement<Model, GenreSelectMessage, Genre> {
+    getMessage(value: string | null): GenreSelectMessage {
       console.log("value", value)
       const msg = value ? { genreId: value } : {};
       return ["genre/select", msg];

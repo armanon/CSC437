@@ -1,6 +1,6 @@
 // src/views/home-view.ts
-import { define, View } from "@calpoly/mustang";
-import { css, html } from "lit";
+import { View } from "@calpoly/mustang";
+import { html } from "lit";
 import { Model } from "../model";
 import { Msg } from "../messages";
 

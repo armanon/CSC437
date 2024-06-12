@@ -1,7 +1,7 @@
 import { define, Form, History, View } from "@calpoly/mustang";
 import { css, html } from "lit";
 import { property } from "lit/decorators.js";
-import { User } from "server/models";
+import { User } from "server/models/user";
 import { Msg } from "../messages";
 import { Model } from "../model";
 
@@ -23,7 +23,7 @@ export class UserEditElement extends View<Model, Msg> {
       <mu-form .init=${this.user} @mu-form:submit=${this._handleSubmit}>
         <label>
           <span>Name</span>
-          <input name="name" .value=${this.user?.name || ""} />
+          <input name="name" .value=${this.user?.username || ""} />
         </label>
         <button type="submit">Save</button>
       </mu-form>

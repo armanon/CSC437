@@ -2,9 +2,8 @@ import mongoose from 'mongoose';
 import { Playlist } from './playlist';
 
 const playlistSchema = new mongoose.Schema<Playlist>({
-  id: { type: String, required: true, trim: true },
+  _id: { type: String, required: true, trim: true },
   title: { type: String, required: true, trim: true },
-  tracks: [{ type: String, trim: true }],
 }, { collection: 'playlists' });
 
 const PlaylistModel = mongoose.model<Playlist>('Playlist', playlistSchema);

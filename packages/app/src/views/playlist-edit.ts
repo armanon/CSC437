@@ -1,7 +1,7 @@
 import { define, Form, History, View } from "@calpoly/mustang";
 import { css, html } from "lit";
 import { property } from "lit/decorators.js";
-import { Playlist } from "server/models";
+import { Playlist } from "server/models/playlist";
 import { Msg } from "../messages";
 import { Model } from "../model";
 
@@ -15,7 +15,7 @@ export class PlaylistEditElement extends View<Model, Msg> {
 
   @property()
   get playlist(): Playlist | undefined {
-    return this.model.playlist;
+    return this.model.playlists[0];
   }
 
   render() {

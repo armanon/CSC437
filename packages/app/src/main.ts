@@ -34,7 +34,7 @@ const routes = [
   },
   {
     path: "/app/artists",
-    view: (params: Switch.Params) => html`
+    view: () => html`
       <artist-view></artist-view>
     `
   },
@@ -52,7 +52,7 @@ const routes = [
   },
   {
     path: "/app/albums",
-    view: (params: Switch.Params) => html`
+    view: () => html`
       <album-view></album-view>
     `
   },
@@ -64,7 +64,7 @@ const routes = [
   },
   {
     path: "/app/concerts",
-    view: (params: Switch.Params) => html`
+    view: () => html`
       <concert-view></concert-view>`
   },
   {
@@ -86,7 +86,7 @@ const routes = [
   },
   {
     path: "/app/genres",
-    view: (params: Switch.Params) => html`
+    view: () => html`
       <genre-view></genre-view>
     `
   },
@@ -98,7 +98,7 @@ const routes = [
   },
   {
     path: "/app/playlists",
-    view: (params: Switch.Params) => html`
+    view: () => html`
       <playlist-view ></playlist-view>
     `
   },

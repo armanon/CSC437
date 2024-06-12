@@ -1,7 +1,7 @@
 import { define, Form, History, View } from "@calpoly/mustang";
 import { css, html } from "lit";
 import { property } from "lit/decorators.js";
-import { Genre } from "server/models";
+import { Genre } from "server/models/genre";
 import { Msg } from "../messages";
 import { Model } from "../model";
 
@@ -15,7 +15,7 @@ export class GenreEditElement extends View<Model, Msg> {
 
   @property()
   get genre(): Genre | undefined {
-    return this.model.genre;
+    return this.model.genres[0];
   }
 
   render() {

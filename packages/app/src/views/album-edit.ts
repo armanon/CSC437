@@ -1,7 +1,7 @@
 import { define, Form, History, View } from "@calpoly/mustang";
 import { css, html } from "lit";
 import { property } from "lit/decorators.js";
-import { Album } from "server/models";
+import { Album } from "server/models/album";
 import { Msg } from "../messages";
 import { Model } from "../model";
 
@@ -15,7 +15,7 @@ export class AlbumEditElement extends View<Model, Msg> {
 
   @property()
   get album(): Album | undefined {
-    return this.model.album;
+    return this.model.albums[0];
   }
 
   render() {

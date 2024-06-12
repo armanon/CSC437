@@ -1,11 +1,13 @@
 import { Auth, Update } from "@calpoly/mustang";
-import { Msg } from "./messages";
+import { AlbumSelectMessagePayload, ArtistSaveMessagePayload, ConcertSelectMessagePayload, Msg, PlaylistSelectMessagePayload, TrackSaveMessagePayload, UserSaveMessagePayload } from "./messages";
 import { Model } from "./model";
 import { Artist } from "server/models/artist";
 import { Album } from "server/models/album";
 import { Concert } from "server/models/concert";
 import { Genre } from "server/models/genre";
 import { Playlist } from "server/models/playlist";
+import { Track } from "server/models/track";
+import { User } from "server/models/user";
 
 export default function update(
   message: Msg,
@@ -19,122 +21,116 @@ export default function update(
           .then(concerts => apply(model => ({...model, concerts})))
       break;
     case "artist/save":
-      saveArtist(message[1], user)
+      saveArtist(message[1]!, user)
         .then((artist) =>
           apply((model) => ({ ...model, artists:[artist] }))
         )
         .then(() => {
-          const { onSuccess } = message[1];
+          const { onSuccess } = message[1]!;
           if (onSuccess) onSuccess();
         })
         .catch((error: Error) => {
-          const { onFailure } = message[1];
+          const { onFailure } = message[1]!;
           if (onFailure) onFailure(error);
         });
       break;
       case "artist/select":
-      loadArtist(message[1], user)
+      loadArtist(message[1]!, user)
           .then((artists) =>
             apply((model) => ({ ...model, artists }))
                )
       break;
     case "album/select":
-	loadAlbum(message[1], user)
+	loadAlbum(message[1]!, user)
 .then((albums) =>
           apply((model) => ({ ...model, albums }))
         )
 	break;
     case "album/save":
-      saveAlbum(message[1], user)
+      saveAlbum(message[1]!, user)
         .then((album) =>
           apply((model) => ({ ...model, album }))
         )
         .then(() => {
-          const { onSuccess } = message[1];
+          const { onSuccess } = message[1]!;
           if (onSuccess) onSuccess();
         })
         .catch((error: Error) => {
-          const { onFailure } = message[1];
+          const { onFailure } = message[1]!;
           if (onFailure) onFailure(error);
         });
       break;
     case "genre/save":
-      saveGenre(message[1], user)
+      saveGenre(message[1]!, user)
         .then((genre) =>
           apply((model) => ({ ...model, genre }))
         )
         .then(() => {
-          const { onSuccess } = message[1];
+          const { onSuccess } = message[1]!;
           if (onSuccess) onSuccess();
         })
         .catch((error: Error) => {
-          const { onFailure } = message[1];
+          const { onFailure } = message[1]!;
           if (onFailure) onFailure(error);
         });
       break;
     case "genre/select":
-      loadGenre(message[1], user)
+      loadGenre(message[1]!, user)
           .then(genres => apply(model => ({ ...model, genres })))
       break;
     case "playlist/select":
-      loadPlaylist(message[1], user)
+      loadPlaylist(message[1]!, user)
           .then(playlists => apply(model => ({ ...model, playlists })));
       break;
     case "playlist/save":
-      savePlaylist(message[1], user)
+      savePlaylist(message[1]!, user)
         .then((playlist) =>
           apply((model) => ({ ...model, playlist }))
         )
         .then(() => {
-          const { onSuccess } = message[1];
+          const { onSuccess } = message[1]!;
           if (onSuccess) onSuccess();
         })
         .catch((error: Error) => {
-          const { onFailure } = message[1];
+          const { onFailure } = message[1]!;
           if (onFailure) onFailure(error);
         });
       break;
     case "track/save":
-      saveTrack(message[1], user)
+      saveTrack(message[1]!, user)
         .then((track) =>
           apply((model) => ({ ...model, track }))
         )
         .then(() => {
-          const { onSuccess } = message[1];
+          const { onSuccess } = message[1]!;
           if (onSuccess) onSuccess();
         })
         .catch((error: Error) => {
-          const { onFailure } = message[1];
+          const { onFailure } = message[1]!;
           if (onFailure) onFailure(error);
         });
       break;
     case "user/save":
-      saveUser(message[1], user)
+      saveUser(message[1]!, user)
         .then((user) =>
           apply((model) => ({ ...model, user }))
         )
         .then(() => {
-          const { onSuccess } = message[1];
+          const { onSuccess } = message[1]!;
           if (onSuccess) onSuccess();
         })
         .catch((error: Error) => {
-          const { onFailure } = message[1];
+          const { onFailure } = message[1]!;
           if (onFailure) onFailure(error);
         });
       break;
-    default:
-      const unhandled: never = message[0];
-      throw new Error(`Unhandled message "${unhandled}"`);
   }
 }
 
 function saveArtist(
-  msg: {
-    artistId: string;
-    artist: Artist;
-  },
+  msg: ArtistSaveMessagePayload,
   user: Auth.User
-) {
+): Promise<Artist> {
   return fetch(`/api/artists/${msg.artistId}`, {
     method: "PUT",
     headers: {
@@ -149,10 +145,6 @@ function saveArtist(
         throw new Error(
           `Failed to save artist for ${msg.artistId}`
         );
-    })
-    .then((json: unknown) => {
-      if (json) return json as Artist;
-      return undefined;
     });
 }
 
@@ -191,9 +183,7 @@ function loadArtist(
 
 
 function loadAlbum(
-msg: {
-    albumId?: string;
-}, user: Auth.User){
+msg: AlbumSelectMessagePayload, user: Auth.User){
   const url = msg.albumId ? `/api/albums/${msg.albumId}` : '/api/albums';
 return fetch(url, {
     headers: {
@@ -307,12 +297,9 @@ function savePlaylist(
 }
 
 function saveTrack(
-  msg: {
-    trackId: string;
-    track: Track;
-  },
+  msg: TrackSaveMessagePayload,
   user: Auth.User
-) {
+): Promise<Track> {
   return fetch(`/api/tracks/${msg.trackId}`, {
     method: "PUT",
     headers: {
@@ -327,20 +314,13 @@ function saveTrack(
         throw new Error(
           `Failed to save track for ${msg.trackId}`
         );
-    })
-    .then((json: unknown) => {
-      if (json) return json as Track;
-      return undefined;
     });
 }
 
 function saveUser(
-  msg: {
-    userId: string;
-    user: User;
-  },
+  msg: UserSaveMessagePayload,
   authUser: Auth.User
-) {
+): Promise<User> {
   return fetch(`/api/users/${msg.userId}`, {
     method: "PUT",
     headers: {
@@ -355,13 +335,9 @@ function saveUser(
         throw new Error(
           `Failed to save user for ${msg.userId}`
         );
-    })
-    .then((json: unknown) => {
-      if (json) return json as User;
-      return undefined;
     });
 }
-function loadConcert(msg: { concertId?: string }, user: Auth.User): Promise<Concert[]> {
+function loadConcert(msg: ConcertSelectMessagePayload = {}, user: Auth.User): Promise<Concert[]> {
     const url = msg.concertId ? `/api/concerts/${msg.concertId}` : '/api/concerts';
 return fetch(url, {
     headers: {
@@ -417,8 +393,8 @@ return fetch(url, {
         }
     });
 }
-function loadPlaylist(msg: { playListId?: string }, user: Auth.User) {
-const url = msg.playListId ? `/api/playlists/${msg.playListId}` : '/api/playlists';
+function loadPlaylist(msg: PlaylistSelectMessagePayload, user: Auth.User) {
+const url = msg.playlistId ? `/api/playlists/${msg.playlistId}` : '/api/playlists';
 return fetch(url, {
     headers: {
       "Content-Type": "application/json",
@@ -430,7 +406,7 @@ return fetch(url, {
       if (response.status === 200) return response.json();
       else
         throw new Error(
-          `Failed to get playlist for ${msg.playListId}`
+          `Failed to get playlist for ${msg.playlistId}`
         );
     })
     .then((json: unknown) => {

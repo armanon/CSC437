@@ -1,12 +1,12 @@
 // src/views/artist-view.ts
 import { TemplateResult, html } from "lit";
 import { Artist } from 'server/models/artist';
-import { Msg } from "../messages";
+import { ArtistSelectMessage } from "../messages";
 import { Model } from "../model";
 import { BaseViewElement } from "./base-view";
 
-export class ArtistViewElement extends  BaseViewElement<Model, Msg, Artist> {
-    getMessage(value: string | null) {
+export class ArtistViewElement extends  BaseViewElement<Model, ArtistSelectMessage, Artist> {
+    getMessage(value: string | null): ArtistSelectMessage {
       console.log("value", value)
       const msg = value ? { artistId: value } : {};
       return ["artist/select", msg];

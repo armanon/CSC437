@@ -1,14 +1,14 @@
 // src/views/playlist-view.ts
 import { TemplateResult, html } from "lit";
 import { Playlist } from 'server/models/playlist';
-import { Msg } from "../messages";
+import { PlaylistSelectMessage } from "../messages";
 import { Model } from "../model";
 import { BaseViewElement } from "./base-view";
 
-export class PlaylistViewElement extends  BaseViewElement<Model, Msg, Playlist> {
-    getMessage(value: string | null) {
+export class PlaylistViewElement extends  BaseViewElement<Model, PlaylistSelectMessage, Playlist> {
+    getMessage(value: string | null): PlaylistSelectMessage {
       console.log("value", value)
-      const msg = value ? { playListId: value } : {};
+      const msg = value ? { playlistId: value } : {};
       return ["playlist/select", msg];
     }
     getValues(): Playlist[] {

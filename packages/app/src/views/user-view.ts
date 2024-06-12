@@ -1,8 +1,8 @@
 // src/views/user-view.ts
-import { define, View } from "@calpoly/mustang";
-import { css, html } from "lit";
+import { View } from "@calpoly/mustang";
+import { html } from "lit";
 import { property } from "lit/decorators.js";
-import { User } from "server/models";
+import { User } from "server/models/user";
 import { Msg } from "../messages";
 import { Model } from "../model";
 
@@ -17,7 +17,7 @@ export class UserViewElement extends View<Model, Msg> {
 
   @property()
   get users(): User[] {
-    return this.model.users || [];
+    return this.model.user ? [this.model.user] : [];
   }
 
   constructor() {
@@ -53,7 +53,7 @@ export class UserViewElement extends View<Model, Msg> {
     ) {
       this.dispatchMessage([
         "user/select",
-        { userid: newValue }
+        { userId: newValue }
       ]);
     }
     super.attributeChangedCallback(name, oldValue, newValue);

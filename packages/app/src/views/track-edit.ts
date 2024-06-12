@@ -1,7 +1,7 @@
 import { define, Form, History, View } from "@calpoly/mustang";
 import { css, html } from "lit";
 import { property } from "lit/decorators.js";
-import { Track } from "server/models";
+import { Track } from "server/models/track";
 import { Msg } from "../messages";
 import { Model } from "../model";
 
@@ -15,7 +15,7 @@ export class TrackEditElement extends View<Model, Msg> {
 
   @property()
   get track(): Track | undefined {
-    return this.model.track;
+    return this.model.tracks[0];
   }
 
   render() {
